@@ -1,0 +1,47 @@
+// This line specifies the version of the Protocol Buffers syntax used in this file.
+syntax = "proto3"; 
+
+// This line specifies the Go package that will be used for generating Go code from this .proto file.
+// In this case, the Go package will be named "proto" and the generated Go code will be placed in the "./proto" directory.
+option go_package = "./proto";
+
+// This line defines the name of the protobuf package. It is used to organize related messages and services.
+package greet_service;
+
+// This block defines a gRPC service named "GreetService".
+service GreetService {
+    // This line defines a unary RPC method "SayHello" that takes "NoParam" as input and returns "HelloResponse".
+    rpc SayHello(NoParam) returns (HelloResponse);
+
+    // This line defines a server-streaming RPC method "SayHelloServerStreaming" that takes "NamesList" as input and returns a stream of "HelloResponse".
+    rpc SayHelloServerStreaming(NamesList) returns (stream HelloResponse);
+
+    // This line defines a client-streaming RPC method "SayHelloClientStreaming" that takes a stream of "HelloRequest" as input and returns "MessageList".
+    rpc SayHelloClientStreaming(stream HelloRequest) returns (MessageList);
+    
+    // This line defines a bidirectional-streaming RPC method "SayHelloBidirectionalStreaming" that takes a stream of "HelloRequest" as input and returns a stream of "HelloResponse".
+    rpc SayHelloBidirectionalStreaming(stream HelloRequest) returns (stream HelloResponse);
+}
+
+// This is an empty message named "NoParam".
+message NoParam {};
+
+// This is a message named "HelloRequest" with a single string field "name" with field number 1.
+message HelloRequest {
+    string name = 1;
+}
+
+// This is a message named "HelloResponse" with a single string field "message" with field number 1.
+message HelloResponse {
+    string message = 1;
+}
+
+// This is a message named "NamesList" with a repeated field of strings named "names" with field number 1.
+message NamesList {
+    repeated string names = 1;
+}
+
+// This is a message named "MessageList" with a repeated field of strings named "messages" with field number 1.
+message MessageList {
+    repeated string messages = 1;
+}
